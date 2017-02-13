@@ -1,10 +1,11 @@
 const express = require('express'),
-      router = express.Router();
+      router = express.Router(),
+      cookieRepository = require('../repositories/cookie.repository');
 
-router.get('/', (req, res, next) => {
-  res.json([
-    'cookie1', 'cookie2', 'cookie3', 'cookie4'
-  ])
+router.get('/', (req, res) => {
+  cookieRepository.getAll()
+    .then(cookies => res.json(cookies))
+    .catch(error => res.status(500).send(error));
 });
 
 module.exports = router;
